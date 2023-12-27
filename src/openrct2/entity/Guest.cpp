@@ -5975,6 +5975,17 @@ bool Guest::ShouldFindBench()
         return false;
     }
 
+    if (Nausea >= 200)
+    {
+        PeepHeadForNearestRideWithFlags(this, true, RIDE_TYPE_FLAG_IS_FIRST_AID);
+
+        auto ride = GetRide(GuestHeadingToRideId);
+        if (ride != nullptr && ride->GetRideTypeDescriptor().HasFlag(RIDE_TYPE_FLAG_IS_FIRST_AID))
+        {
+            return false;
+        }
+    }
+
     return !GetNextIsSurface() && !GetNextIsSloped();
 }
 
